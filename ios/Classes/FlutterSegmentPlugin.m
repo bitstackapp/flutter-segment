@@ -4,7 +4,7 @@
 #import <Segment/SEGContext.h>
 #import <Segment/SEGMiddleware.h>
 #import <Segment_Amplitude/SEGAmplitudeIntegrationFactory.h>
-#import <Segment-Adjust/SEGAdjustIntegrationFactory.h>
+#import <Segment_Adjust/SEGAdjustIntegrationFactory.h>
 
 
 @implementation FlutterSegmentPlugin
