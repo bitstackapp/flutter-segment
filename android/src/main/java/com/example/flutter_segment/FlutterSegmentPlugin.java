@@ -15,6 +15,7 @@ import com.segment.analytics.Options;
 import com.segment.analytics.Middleware;
 import com.segment.analytics.integrations.BasePayload;
 import com.segment.analytics.android.integrations.amplitude.AmplitudeIntegration;
+import com.segment.analytics.android.integrations.adjust.AdjustIntegration;
 import com.segment.analytics.android.integrations.appsflyer.AppsflyerIntegration;
 import static com.segment.analytics.Analytics.LogLevel;
 
@@ -86,6 +87,10 @@ public class FlutterSegmentPlugin implements MethodCallHandler, FlutterPlugin {
 
       if (options.isAmplitudeIntegrationEnabled()) {
         analyticsBuilder.use(AmplitudeIntegration.FACTORY);
+      }
+
+      if (options.isAdjustIntegrationEnabled()) {
+        analyticsBuilder.use(AdjustIntegration.FACTORY);
       }
 
       if (options.isAppsflyerIntegrationEnabled()) {
