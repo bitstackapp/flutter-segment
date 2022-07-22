@@ -3,6 +3,7 @@ class SegmentConfig {
     required this.writeKey,
     this.trackApplicationLifecycleEvents = false,
     this.amplitudeIntegrationEnabled = false,
+    this.adjustIntegrationEnabled = false,
     this.appsflyerIntegrationEnabled = false,
     this.debug = false,
   });
@@ -10,6 +11,7 @@ class SegmentConfig {
   final String writeKey;
   final bool trackApplicationLifecycleEvents;
   final bool amplitudeIntegrationEnabled;
+  final bool adjustIntegrationEnabled;
   final bool appsflyerIntegrationEnabled;
   final bool debug;
 
@@ -19,6 +21,7 @@ class SegmentConfig {
       'trackApplicationLifecycleEvents': trackApplicationLifecycleEvents,
       'amplitudeIntegrationEnabled': amplitudeIntegrationEnabled,
       'appsflyerIntegrationEnabled': appsflyerIntegrationEnabled,
+      'adjustIntegrationEnabled': adjustIntegrationEnabled,
       'debug': debug,
     };
   }
