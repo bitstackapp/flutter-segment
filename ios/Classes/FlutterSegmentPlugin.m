@@ -5,7 +5,7 @@
 #import <Segment/SEGMiddleware.h>
 #import <Segment_Amplitude/SEGAmplitudeIntegrationFactory.h>
 #import <Segment_Adjust/SEGAdjustIntegrationFactory.h>
-
+#import <AdSupport/AdSupport.h>
 
 @implementation FlutterSegmentPlugin
 // Contents to be appended to the context
@@ -353,12 +353,19 @@ static BOOL wasSetupFromFile = NO;
     BOOL trackApplicationLifecycleEvents = [[dict objectForKey: @"com.claimsforce.segment.TRACK_APPLICATION_LIFECYCLE_EVENTS"] boolValue];
     BOOL isAmplitudeIntegrationEnabled = [[dict objectForKey: @"com.claimsforce.segment.ENABLE_AMPLITUDE_INTEGRATION"] boolValue];
     BOOL isAdjustIntegrationEnabled = [[dict objectForKey: @"com.claimsforce.segment.ENABLE_ADJUST_INTEGRATION"] boolValue];
+    BOOL enableAdvertisingTracking = [[dict objectForKey: @"com.claimsforce.segment.ENABLE_ADVERTISING_TRACKING"] boolValue];
+    BOOL addAdvertisingIdentifier = [[dict objectForKey: @"com.claimsforce.segment.ADD_ADVERTISING_IDENTIFIER"] boolValue];
     if(!writeKey) {
         return nil;
     }
     SEGAnalyticsConfiguration *configuration = [SEGAnalyticsConfiguration configurationWithWriteKey:writeKey];
     configuration.trackApplicationLifecycleEvents = trackApplicationLifecycleEvents;
-
+    configuration.enableAdvertisingTracking = enableAdvertisingTracking;
+    if (addAdvertisingIdentifier) {
+        configuration.adSupportBlock = ^{
+            return [[[ASIdentifierManager sharedManager] advertisingIdentifier] UUIDString];
+        };
+    }
     if (isAmplitudeIntegrationEnabled) {
       [configuration use:[SEGAmplitudeIntegrationFactory instance]];
     }
@@ -375,8 +382,11 @@ static BOOL wasSetupFromFile = NO;
     BOOL isAmplitudeIntegrationEnabled = [[dict objectForKey: @"amplitudeIntegrationEnabled"] boolValue];
     BOOL isAppsflyerIntegrationEnabled = [[dict objectForKey: @"appsflyerIntegrationEnabled"] boolValue];
     BOOL isAdjustIntegrationEnabled = [[dict objectForKey: @"adjustIntegrationEnabled"] boolValue];
+    BOOL enableAdvertisingTracking = [[dict objectForKey: @"enableAdvertisingTracking"] boolValue];
+    BOOL addAdvertisingIdentifier = [[dict objectForKey: @"addAdvertisingIdentifier"] boolValue];
     SEGAnalyticsConfiguration *configuration = [SEGAnalyticsConfiguration configurationWithWriteKey:writeKey];
     configuration.trackApplicationLifecycleEvents = trackApplicationLifecycleEvents;
+    configuration.enableAdvertisingTracking = enableAdvertisingTracking;
 
     if (isAmplitudeIntegrationEnabled) {
       [configuration use:[SEGAmplitudeIntegrationFactory instance]];
@@ -388,6 +398,12 @@ static BOOL wasSetupFromFile = NO;
 
     if (isAppsflyerIntegrationEnabled) {
       [configuration use:[SEGAdjustIntegrationFactory instance]];
+    }
+
+    if (addAdvertisingIdentifier) {
+        configuration.adSupportBlock = ^{
+            return [[[ASIdentifierManager sharedManager] advertisingIdentifier] UUIDString];
+        };
     }
 
     return configuration;

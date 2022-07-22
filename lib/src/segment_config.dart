@@ -5,6 +5,8 @@ class SegmentConfig {
     this.amplitudeIntegrationEnabled = false,
     this.adjustIntegrationEnabled = false,
     this.appsflyerIntegrationEnabled = false,
+    this.enableAdvertisingTracking = false,
+    this.addAdvertisingIdentifier = false,
     this.debug = false,
   });
 
@@ -13,6 +15,8 @@ class SegmentConfig {
   final bool amplitudeIntegrationEnabled;
   final bool adjustIntegrationEnabled;
   final bool appsflyerIntegrationEnabled;
+  final bool enableAdvertisingTracking;
+  final bool addAdvertisingIdentifier;
   final bool debug;
 
   Map<String, dynamic> toMap() {
@@ -22,6 +26,8 @@ class SegmentConfig {
       'amplitudeIntegrationEnabled': amplitudeIntegrationEnabled,
       'appsflyerIntegrationEnabled': appsflyerIntegrationEnabled,
       'adjustIntegrationEnabled': adjustIntegrationEnabled,
+      'enableAdvertisingTracking': enableAdvertisingTracking,
+      'addAdvertisingIdentifier': addAdvertisingIdentifier,
       'debug': debug,
     };
   }
