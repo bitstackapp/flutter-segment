@@ -5,7 +5,10 @@
 #import <Segment/SEGMiddleware.h>
 #import <Segment_Amplitude/SEGAmplitudeIntegrationFactory.h>
 #import <Segment_Adjust/SEGAdjustIntegrationFactory.h>
-#import <AdSupport/AdSupport.h>
+#if __IPHONE_14_0
+@import AppTrackingTransparency;
+#endif
+@import AdSupport;
 
 @implementation FlutterSegmentPlugin
 // Contents to be appended to the context
@@ -376,6 +379,8 @@ static BOOL wasSetupFromFile = NO;
     return configuration;
 }
 
+
+
 + (SEGAnalyticsConfiguration*)createConfigFromDict:(NSDictionary*) dict {
     NSString *writeKey = [dict objectForKey: @"writeKey"];
     BOOL trackApplicationLifecycleEvents = [[dict objectForKey: @"trackApplicationLifecycleEvents"] boolValue];
@@ -401,9 +406,12 @@ static BOOL wasSetupFromFile = NO;
     }
 
     if (addAdvertisingIdentifier) {
-        configuration.adSupportBlock = ^{
-            return [[[ASIdentifierManager sharedManager] advertisingIdentifier] UUIDString];
-        };
+        if (@available(iOS 14, *)) {
+                [configuration setAdSupportBlock:^NSString * _Nonnull(void) {
+                    NSString *idfa = [[[ASIdentifierManager sharedManager] advertisingIdentifier] UUIDString];
+                    return idfa;
+                }];
+            }
     }
 
     return configuration;

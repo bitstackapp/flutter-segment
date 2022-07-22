@@ -10,6 +10,8 @@ public class FlutterSegmentOptions {
     private final Boolean amplitudeIntegrationEnabled;
     private final Boolean appsflyerIntegrationEnabled;
     private final Boolean adjustIntegrationEnabled;
+    private final Boolean enableAdvertisingTracking;
+    private final Boolean addAdvertisingIdentifier;
     private final Boolean debug;
 
     public  FlutterSegmentOptions(
@@ -18,6 +20,8 @@ public class FlutterSegmentOptions {
             Boolean amplitudeIntegrationEnabled,
             Boolean appsflyerIntegrationEnabled,
             Boolean adjustIntegrationEnabled,
+            Boolean enableAdvertisingTracking,
+            Boolean addAdvertisingIdentifier,
             Boolean debug
     ) {
         this.writeKey = writeKey;
@@ -25,6 +29,8 @@ public class FlutterSegmentOptions {
         this.amplitudeIntegrationEnabled = amplitudeIntegrationEnabled;
         this.appsflyerIntegrationEnabled = appsflyerIntegrationEnabled;
         this.adjustIntegrationEnabled = adjustIntegrationEnabled;
+        this.addAdvertisingIdentifier = addAdvertisingIdentifier;
+        this.enableAdvertisingTracking = enableAdvertisingTracking;
         this.debug = debug;
     }
 
@@ -48,6 +54,14 @@ public class FlutterSegmentOptions {
         return adjustIntegrationEnabled;
     }
 
+    public Boolean isAdvertisingTrackingEnabled() {
+        return addAdvertisingIdentifier;
+    }
+
+    public Boolean isAdvertisingIdentifierEnabled() {
+        return addAdvertisingIdentifier;
+    }
+
     public Boolean getDebug() {
         return debug;
     }
@@ -58,8 +72,10 @@ public class FlutterSegmentOptions {
         Boolean isAmplitudeIntegrationEnabled = bundle.getBoolean("com.claimsforce.segment.ENABLE_AMPLITUDE_INTEGRATION", false);
         Boolean isAppsflyerIntegrationEnabled = bundle.getBoolean("com.claimsforce.segment.ENABLE_APPSFLYER_INTEGRATION", false);
         Boolean isAdjustIntegrationEnabled = bundle.getBoolean("com.claimsforce.segment.ENABLE_ADJUST_INTEGRATION", false);
+        Boolean isAdvertisingTrackingEnabled = bundle.getBoolean("com.claimsforce.segment.ENABLE_ADVERTISING_TRACKING", false);
+        Boolean addAdvertisingIdentifier = bundle.getBoolean("com.claimsforce.segment.ADD_ADVERTISING_IDENTIFIER", false);
         Boolean debug = bundle.getBoolean("com.claimsforce.segment.DEBUG", false);
-        return new FlutterSegmentOptions(writeKey, trackApplicationLifecycleEvents, isAmplitudeIntegrationEnabled, isAppsflyerIntegrationEnabled, debug);
+        return new FlutterSegmentOptions(writeKey, trackApplicationLifecycleEvents, isAmplitudeIntegrationEnabled, isAppsflyerIntegrationEnabled, isAdjustIntegrationEnabled, isAdvertisingTrackingEnabled, addAdvertisingIdentifier, debug);
     }
 
     static FlutterSegmentOptions create(HashMap<String, Object> options) {
@@ -68,8 +84,10 @@ public class FlutterSegmentOptions {
         Boolean isAmplitudeIntegrationEnabled = orFalse((Boolean) options.get("amplitudeIntegrationEnabled"));
         Boolean isAppsflyerIntegrationEnabled = orFalse((Boolean) options.get("appsflyerIntegrationEnabled"));
         Boolean isAdjustIntegrationEnabled = orFalse((Boolean) options.get("adjustIntegrationEnabled"));
+        Boolean isAdvertisingTrackingEnabled = orFalse((Boolean) options.get("enableAdvertisingTracking"));
+        Boolean addAdvertisingIdentifier = orFalse((Boolean) options.get("addAdvertisingIdentifier"));
         Boolean debug = orFalse((Boolean) options.get("debug"));
-        return new FlutterSegmentOptions(writeKey, trackApplicationLifecycleEvents, isAmplitudeIntegrationEnabled, isAppsflyerIntegrationEnabled, debug);
+        return new FlutterSegmentOptions(writeKey, trackApplicationLifecycleEvents, isAmplitudeIntegrationEnabled, isAppsflyerIntegrationEnabled, isAdjustIntegrationEnabled, isAdvertisingTrackingEnabled, addAdvertisingIdentifier, debug);
     }
 
     private static Boolean orFalse(Boolean value) {
