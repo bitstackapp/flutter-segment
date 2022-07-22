@@ -366,8 +366,8 @@ static BOOL wasSetupFromFile = NO;
     configuration.enableAdvertisingTracking = enableAdvertisingTracking;
     if (addAdvertisingIdentifier) {
         configuration.adSupportBlock = ^{
-            return [[[ASIdentifierManager sharedManager] advertisingIdentifier] UUIDString];
-        };
+                return [[[ASIdentifierManager sharedManager] advertisingIdentifier] UUIDString];
+            };
     }
     if (isAmplitudeIntegrationEnabled) {
       [configuration use:[SEGAmplitudeIntegrationFactory instance]];
@@ -406,12 +406,9 @@ static BOOL wasSetupFromFile = NO;
     }
 
     if (addAdvertisingIdentifier) {
-        if (@available(iOS 14, *)) {
-                [configuration setAdSupportBlock:^NSString * _Nonnull(void) {
-                    NSString *idfa = [[[ASIdentifierManager sharedManager] advertisingIdentifier] UUIDString];
-                    return idfa;
-                }];
-            }
+        configuration.adSupportBlock = ^{
+            return [[[ASIdentifierManager sharedManager] advertisingIdentifier] UUIDString];
+        };
     }
 
     return configuration;
