@@ -374,7 +374,7 @@ static BOOL wasSetupFromFile = NO;
     BOOL trackApplicationLifecycleEvents = [[dict objectForKey: @"trackApplicationLifecycleEvents"] boolValue];
     BOOL isAmplitudeIntegrationEnabled = [[dict objectForKey: @"amplitudeIntegrationEnabled"] boolValue];
     BOOL isAppsflyerIntegrationEnabled = [[dict objectForKey: @"appsflyerIntegrationEnabled"] boolValue];
-    BOOL isAdjustIntegrationEnabled = [[dict objectForKey: @"isAdjustIntegrationEnabled"] boolValue];
+    BOOL isAdjustIntegrationEnabled = [[dict objectForKey: @"adjustIntegrationEnabled"] boolValue];
     SEGAnalyticsConfiguration *configuration = [SEGAnalyticsConfiguration configurationWithWriteKey:writeKey];
     configuration.trackApplicationLifecycleEvents = trackApplicationLifecycleEvents;
 
